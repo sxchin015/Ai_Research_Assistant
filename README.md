@@ -302,7 +302,6 @@ Built for the **NeoStats AI Engineer Assignment 2026**
 
 <div align="center">
 
-Made with ❤️ &nbsp;|&nbsp; Powered by [Groq](https://console.groq.com) &nbsp;|&nbsp; Total cost: **$0**
 
 ⭐ Star this repo if it helped you!
 
