@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Research Assistant — Demo Screenshots</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1a1a2e; font-family: 'Segoe UI', sans-serif; padding: 30px 20px; }
+
+h1 { color: #a78bfa; font-size: 22px; text-align: center; margin-bottom: 6px; }
+.subtitle { color: #6060aa; font-size: 13px; text-align: center; margin-bottom: 30px; }
+
+.screenshots { display: flex; flex-direction: column; gap: 36px; max-width: 860px; margin: 0 auto; }
+
+.shot-label {
+  font-size: 13px; font-weight: 600; color: #cccce8;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 9px;
+}
+.shot-num {
+  background: #7c3aed; color: #fff; font-size: 11px; font-weight: 700;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.shot-tag {
+  background: rgba(167,139,250,0.15); color: #a78bfa;
+  border: 1px solid rgba(167,139,250,0.3); border-radius: 20px;
+  padding: 2px 10px; font-size: 11px;
+}
+
+.app-frame {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  font-family: 'Segoe UI', sans-serif;
+  background: #0d0d1f; color: #e8e8f0;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.topbar {
+  background: #13132a; padding: 9px 16px;
+  display: flex; align-items: center; gap: 7px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot.r{background:#ff5f57} .dot.y{background:#ffbd2e} .dot.g{background:#28c840}
+.url-bar {
+  background: rgba(255,255,255,0.06); border-radius: 5px;
+  padding: 3px 12px; font-size: 12px; color: #8888aa; margin-left: 8px; flex: 1;
+}
+
+.layout { display: flex; }
+
+.sb {
+  width: 200px; min-width: 200px; background: #13132a;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 14px 12px; display: flex; flex-direction: column; gap: 9px; font-size: 12px;
+}
+.sb-logo { font-size: 14px; font-weight: 700; color: #a78bfa; }
+.sb-logo small { font-size: 10px; color: #5555aa; display: block; margin-top: 1px; }
+.sb-hr { border: none; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-lbl { font-size: 10px; color: #5555aa; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; }
+.sb-box { padding: 5px 9px; border-radius: 6px; font-size: 11px; border-left: 3px solid; }
+.ok   { background: rgba(16,185,129,0.1);  border-color: #10b981; color: #6ee7b7; }
+.warn { background: rgba(251,191,36,0.1);  border-color: #fbbf24; color: #fde68a; }
+.mode-row { display: flex; gap: 5px; }
+.mbtn { flex:1; padding: 5px 4px; border-radius: 5px; border: 1px solid rgba(167,139,250,0.25); background: transparent; color: #6666aa; font-size: 11px; text-align: center; }
+.mbtn.on { background: rgba(167,139,250,0.2); border-color: #a78bfa; color: #a78bfa; font-weight: 700; }
+.stats3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; }
+.sbox { background: rgba(255,255,255,0.04); border-radius: 5px; padding: 5px 3px; text-align: center; }
+.sv { font-size: 16px; font-weight: 700; }
+.sl { font-size: 9px; color: #5555aa; }
+
+.upload-area {
+  border: 1px dashed rgba(167,139,250,0.35); border-radius: 7px;
+  padding: 10px 8px; text-align: center; background: rgba(255,255,255,0.02);
+}
+.upload-area p { font-size: 10px; color: #6060aa; margin-top: 3px; }
+.upload-file {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.04); border-radius: 6px; padding: 5px 8px; margin-top: 5px;
+}
+.upload-file .fn { font-size: 11px; color: #a78bfa; }
+.upload-file .fs { font-size: 10px; color: #5555aa; }
+
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.mhdr { padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.mtitle {
+  font-size: 17px; font-weight: 800;
+  background: linear-gradient(90deg,#a78bfa,#60a5fa,#34d399);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.msub { font-size: 10px; color: #6060aa; margin-top: 2px; }
+
+.chat { padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
+
+.mrow { display: flex; gap: 7px; align-items: flex-start; }
+.mrow.u { flex-direction: row-reverse; }
+.av { width: 24px; height: 24px; min-width: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+.av.b { background: rgba(167,139,250,0.25); color: #a78bfa; }
+.av.u { background: rgba(96,165,250,0.25); color: #60a5fa; }
+.bwrap { max-width: 82%; }
+.bdg { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; margin-bottom: 3px; }
+.rag-b { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+.web-b { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.25); }
+.llm-b { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.25); }
+.bub { padding: 8px 11px; border-radius: 9px; font-size: 12px; line-height: 1.55; }
+.bub.b { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); border-radius: 2px 9px 9px 9px; color: #cccce8; }
+.bub.u { background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.18); color: #c4d8f8; border-radius: 9px 2px 9px 9px; }
+.bub b { color: #a78bfa; }
+.bub .hb { color: #60a5fa; }
+
+.expander {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px; padding: 5px 10px; font-size: 10px; color: #5555aa;
+  display: flex; justify-content: space-between; margin-top: 4px;
+}
+
+.status-pill {
+  padding: 4px 14px; font-size: 10px; display: flex; align-items: center; gap: 5px;
+  margin: 4px 14px;
+}
+.pill-rag { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); border-radius: 20px; color: #34d399; }
+.pill-web { background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.2); border-radius: 20px; color: #60a5fa; }
+
+.ibar { padding: 8px 12px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 7px; align-items: center; }
+.finput { flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(167,139,250,0.3); border-radius: 7px; padding: 7px 11px; font-size: 12px; color: #6060aa; }
+.sbtn { width: 30px; height: 30px; border-radius: 7px; background: rgba(167,139,250,0.2); border: 1px solid rgba(167,139,250,0.4); color: #a78bfa; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+
+.empty-center { flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; padding:28px; }
+
+.spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(167,139,250,0.3); border-top-color: #a78bfa; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.indexing-bar { width: 180px; height: 5px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow:hidden; margin-top: 4px; }
+.indexing-fill { width: 65%; height: 100%; background: linear-gradient(90deg,#7c3aed,#06b6d4); border-radius: 4px; }
+
+.print-note { text-align: center; color: #5555aa; font-size: 11px; margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>🔬 AI Research Assistant — Demo Screenshots</h1>
+<p class="subtitle">NeoStats AI Engineer Assignment &nbsp;·&nbsp; Built by sxchin015 &nbsp;·&nbsp; github.com/sxchin015/Ai_Research_Assistant</p>
+
+<div class="screenshots">
+
+  <!-- ── SCREENSHOT 1: Home ── -->
+  <div>
+    <div class="shot-label">
+      <div class="shot-num">1</div>
+      Home screen — app launched, ready to use
+      <span class="shot-tag">First view</span>
+    </div>
+    <div class="app-frame">
+      <div class="topbar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="url-bar">🔒 localhost:8501 — AI Research Assistant</div>
+      </div>
+      <div class="layout" style="min-height:300px;">
+        <div class="sb">
+          <div class="sb-logo">🔬 Research Assistant<small>NeoStats Assignment</small></div>
+          <hr class="sb-hr">
+          <div class="sb-box ok">✓ Groq API key loaded</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Response Mode</div>
+          <div class="mode-row"><div class="mbtn on">⚡ Concise</div><div class="mbtn">📖 Detailed</div></div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Upload Document (RAG)</div>
+          <div class="upload-area">
+            <div style="font-size:12px;color:#a78bfa;font-weight:700;">📄 Drag & drop or browse</div>
+            <p>PDF, TXT, MD — up to 200MB</p>
+          </div>
+          <div class="sb-box warn">📭 No doc — will use web search</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Session Stats</div>
+          <div class="stats3">
+            <div class="sbox"><div class="sv">0</div><div class="sl">Queries</div></div>
+            <div class="sbox"><div class="sv">0</div><div class="sl">RAG</div></div>
+            <div class="sbox"><div class="sv">0</div><div class="sl">Web</div></div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="mhdr">
+            <div class="mtitle">🔬 AI Research Assistant</div>
+            <div class="msub">Documents (RAG) · Live web search · Groq LLaMA · 100% Free</div>
+          </div>
+          <div class="empty-center">
+            <div style="font-size:36px;">🔬</div>
+            <div style="font-size:15px;color:#a78bfa;font-weight:700;">Ask me anything</div>
+            <div style="font-size:12px;color:#5555aa;text-align:center;max-width:300px;">Upload a PDF to search your documents, or just ask a question and I'll search the web automatically</div>
+            <div style="display:flex;gap:8px;margin-top:6px;">
+              <div style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);border-radius:20px;padding:3px 10px;font-size:10px;color:#34d399;">📚 RAG Search</div>
+              <div style="background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.25);border-radius:20px;padding:3px 10px;font-size:10px;color:#60a5fa;">🌐 Web Search</div>
+              <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);border-radius:20px;padding:3px 10px;font-size:10px;color:#a78bfa;">🤖 Groq AI</div>
+            </div>
+          </div>
+          <div class="ibar">
+            <div class="finput">Ask a research question…</div>
+            <div class="sbtn">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREENSHOT 2: Indexing ── -->
+  <div>
+    <div class="shot-label">
+      <div class="shot-num">2</div>
+      PDF uploaded — being indexed into vector database
+      <span class="shot-tag">RAG Indexing</span>
+    </div>
+    <div class="app-frame">
+      <div class="topbar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="url-bar">🔒 localhost:8501 — AI Research Assistant</div>
+      </div>
+      <div class="layout" style="min-height:260px;">
+        <div class="sb">
+          <div class="sb-logo">🔬 Research Assistant<small>NeoStats Assignment</small></div>
+          <hr class="sb-hr">
+          <div class="sb-box ok">✓ Groq API key loaded</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Response Mode</div>
+          <div class="mode-row"><div class="mbtn on">⚡ Concise</div><div class="mbtn">📖 Detailed</div></div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Upload Document (RAG)</div>
+          <div class="upload-file">
+            <span style="font-size:16px;">📄</span>
+            <div><div class="fn">sachin_resume.pdf</div><div class="fs">59.2 KB</div></div>
+          </div>
+          <div class="sb-box warn" style="display:flex;align-items:center;gap:6px;">
+            <span class="spinner"></span> Indexing document...
+          </div>
+        </div>
+        <div class="main">
+          <div class="mhdr">
+            <div class="mtitle">🔬 AI Research Assistant</div>
+            <div class="msub">Documents (RAG) · Live web search · Groq LLaMA · 100% Free</div>
+          </div>
+          <div class="empty-center">
+            <div style="font-size:28px;">📚</div>
+            <div style="font-size:14px;color:#a78bfa;font-weight:700;">Building your document index...</div>
+            <div class="indexing-bar"><div class="indexing-fill"></div></div>
+            <div style="font-size:11px;color:#5555aa;text-align:center;max-width:320px;">
+              Reading PDF → splitting into 800-char chunks → converting to vector embeddings using sentence-transformers → storing in FAISS index
+            </div>
+            <div style="font-size:10px;color:#34d399;margin-top:4px;">⏳ First-time model download ~90MB — only happens once</div>
+          </div>
+          <div class="ibar">
+            <div class="finput">Ask a research question…</div>
+            <div class="sbtn">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREENSHOT 3: RAG Answer ── -->
+  <div>
+    <div class="shot-label">
+      <div class="shot-num">3</div>
+      RAG answer — found in uploaded document (resume)
+      <span class="shot-tag">📚 RAG Hit</span>
+    </div>
+    <div class="app-frame">
+      <div class="topbar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="url-bar">🔒 localhost:8501 — AI Research Assistant</div>
+      </div>
+      <div class="layout" style="min-height:330px;">
+        <div class="sb">
+          <div class="sb-logo">🔬 Research Assistant<small>NeoStats Assignment</small></div>
+          <hr class="sb-hr">
+          <div class="sb-box ok">✓ Groq API key loaded</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Response Mode</div>
+          <div class="mode-row"><div class="mbtn on">⚡ Concise</div><div class="mbtn">📖 Detailed</div></div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Upload Document (RAG)</div>
+          <div class="sb-box ok">📚 RAG Active: sachin_resume.pdf</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Session Stats</div>
+          <div class="stats3">
+            <div class="sbox"><div class="sv" style="color:#a78bfa">1</div><div class="sl">Queries</div></div>
+            <div class="sbox"><div class="sv" style="color:#34d399">1</div><div class="sl">RAG</div></div>
+            <div class="sbox"><div class="sv">0</div><div class="sl">Web</div></div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="mhdr">
+            <div class="mtitle">🔬 AI Research Assistant</div>
+            <div class="msub">Documents (RAG) · Live web search · Groq LLaMA · 100% Free</div>
+          </div>
+          <div class="status-pill pill-rag">✓ RAG retrieved 3 chunks from document (cosine score 0.74)</div>
+          <div class="chat">
+            <div class="mrow u">
+              <div class="av u">S</div>
+              <div class="bwrap"><div class="bub u">What are my key skills for a data scientist role?</div></div>
+            </div>
+            <div class="mrow">
+              <div class="av b">AI</div>
+              <div class="bwrap">
+                <span class="bdg rag-b">📚 RAG · Document</span>
+                <div class="bub b">Based on your resume, your key skills for a Data Scientist role are <b>Python</b>, machine learning (scikit-learn, TensorFlow), data analysis with Pandas/NumPy, SQL, and data visualisation with Matplotlib and Seaborn.</div>
+                <div class="expander"><span>🔧 Pipeline trace</span><span>▾</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ibar">
+            <div class="finput">Ask about your document…</div>
+            <div class="sbtn">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREENSHOT 4: Web Search ── -->
+  <div>
+    <div class="shot-label">
+      <div class="shot-num">4</div>
+      Web search fallback — live DuckDuckGo results
+      <span class="shot-tag">🌐 Web Search</span>
+    </div>
+    <div class="app-frame">
+      <div class="topbar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="url-bar">🔒 localhost:8501 — AI Research Assistant</div>
+      </div>
+      <div class="layout" style="min-height:330px;">
+        <div class="sb">
+          <div class="sb-logo">🔬 Research Assistant<small>NeoStats Assignment</small></div>
+          <hr class="sb-hr">
+          <div class="sb-box ok">✓ Groq API key loaded</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Response Mode</div>
+          <div class="mode-row"><div class="mbtn on">⚡ Concise</div><div class="mbtn">📖 Detailed</div></div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Upload Document (RAG)</div>
+          <div class="sb-box warn">📭 No doc — will use web search</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Session Stats</div>
+          <div class="stats3">
+            <div class="sbox"><div class="sv" style="color:#a78bfa">2</div><div class="sl">Queries</div></div>
+            <div class="sbox"><div class="sv">0</div><div class="sl">RAG</div></div>
+            <div class="sbox"><div class="sv" style="color:#60a5fa">2</div><div class="sl">Web</div></div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="mhdr">
+            <div class="mtitle">🔬 AI Research Assistant</div>
+            <div class="msub">Documents (RAG) · Live web search · Groq LLaMA · 100% Free</div>
+          </div>
+          <div class="status-pill pill-web">✓ Web search (DuckDuckGo) returned 5 live results</div>
+          <div class="chat">
+            <div class="mrow u">
+              <div class="av u">S</div>
+              <div class="bwrap"><div class="bub u">What are the top AI engineer jobs in India in 2025?</div></div>
+            </div>
+            <div class="mrow">
+              <div class="av b">AI</div>
+              <div class="bwrap">
+                <span class="bdg web-b">🌐 Web · DuckDuckGo</span>
+                <div class="bub b">Top AI engineer roles in India (2025) include <b>ML Engineer</b>, NLP Engineer, and AI Research Scientist. Companies like TCS, Infosys, Google India, and startups are actively hiring. Salaries range from ₹12–40 LPA depending on experience and stack.</div>
+                <div class="expander"><span>🔧 Pipeline trace</span><span>▾</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ibar">
+            <div class="finput">Ask a research question…</div>
+            <div class="sbtn">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREENSHOT 5: Detailed Mode ── -->
+  <div>
+    <div class="shot-label">
+      <div class="shot-num">5</div>
+      Detailed mode — deep structured answer with headings
+      <span class="shot-tag">📖 Detailed Mode</span>
+    </div>
+    <div class="app-frame">
+      <div class="topbar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="url-bar">🔒 localhost:8501 — AI Research Assistant</div>
+      </div>
+      <div class="layout" style="min-height:370px;">
+        <div class="sb">
+          <div class="sb-logo">🔬 Research Assistant<small>NeoStats Assignment</small></div>
+          <hr class="sb-hr">
+          <div class="sb-box ok">✓ Groq API key loaded</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Response Mode</div>
+          <div class="mode-row"><div class="mbtn">⚡ Concise</div><div class="mbtn on">📖 Detailed</div></div>
+          <div class="sb-box warn" style="font-size:10px;">Mode: <b>Detailed</b> — full explanation</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Upload Document (RAG)</div>
+          <div class="sb-box ok">📚 RAG Active: sachin_resume.pdf</div>
+          <hr class="sb-hr">
+          <div class="sb-lbl">Session Stats</div>
+          <div class="stats3">
+            <div class="sbox"><div class="sv" style="color:#a78bfa">3</div><div class="sl">Queries</div></div>
+            <div class="sbox"><div class="sv" style="color:#34d399">2</div><div class="sl">RAG</div></div>
+            <div class="sbox"><div class="sv" style="color:#60a5fa">1</div><div class="sl">Web</div></div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="mhdr">
+            <div class="mtitle">🔬 AI Research Assistant</div>
+            <div class="msub">Documents (RAG) · Live web search · Groq LLaMA · 100% Free</div>
+          </div>
+          <div class="chat">
+            <div class="mrow u">
+              <div class="av u">S</div>
+              <div class="bwrap"><div class="bub u">Explain how RAG works in simple terms</div></div>
+            </div>
+            <div class="mrow">
+              <div class="av b">AI</div>
+              <div class="bwrap">
+                <span class="bdg llm-b">🤖 Groq LLaMA</span>
+                <div class="bub b" style="font-size:11.5px;">
+                  <b>What is RAG?</b><br>
+                  RAG (Retrieval-Augmented Generation) connects an AI model to your documents so it answers from real content — not just its training data.<br><br>
+                  <b class="hb">How it works in 3 steps:</b><br>
+                  <b>1. Index</b> — PDF is split into chunks, converted to number vectors (embeddings), stored in FAISS.<br>
+                  <b>2. Retrieve</b> — your question is also vectorised; FAISS finds the most similar chunks using cosine similarity.<br>
+                  <b>3. Generate</b> — the matching chunks + your question go to Groq LLaMA, which writes a grounded, accurate answer.
+                </div>
+                <div class="expander"><span>🔧 Pipeline trace</span><span>▾</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ibar">
+            <div class="finput">Ask a research question…</div>
+            <div class="sbtn">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="print-note">Open in browser → Right-click → Print / Save as PDF to get high-quality screenshots &nbsp;·&nbsp; github.com/sxchin015/Ai_Research_Assistant</p>
+
+</body>
+</html>
