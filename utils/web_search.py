@@ -1,6 +1,6 @@
 import logging
 import requests
-from config.config import SERPAPI_KEY
+from config.config import SERPAPI_KEY, TAVILY_API_KEY
 
 logger = logging.getLogger(__name__)
 
@@ -10,6 +10,26 @@ try:
     DDGS_AVAILABLE = True
 except ImportError:
     pass
+
+TAVILY_AVAILABLE = False
+try:
+    from tavily import TavilyClient
+    TAVILY_AVAILABLE = True
+except ImportError:
+    pass
+
+
+def _tavily(query, max_results=5):
+    """Search using Tavily and normalise results to title/href/body keys."""
+    if not TAVILY_AVAILABLE:
+        raise RuntimeError("tavily-python not installed.")
+    client = TavilyClient(api_key=TAVILY_API_KEY)
+    response = client.search(query=query, max_results=max_results)
+    # Map Tavily keys (title, url, content) → existing format (title, href, body)
+    return [
+        {"title": r.get("title", ""), "href": r.get("url", ""), "body": r.get("content", "")}
+        for r in response.get("results", [])
+    ]
 
 
 def _duckduckgo(query, max_results=5):
@@ -42,6 +62,14 @@ def _format(results, source):
 
 
 def web_search(query, max_results=5):
+    # Priority: Tavily → SerpAPI → DuckDuckGo
+    if TAVILY_API_KEY:
+        try:
+            results = _tavily(query, max_results)
+            return _format(results, "Tavily"), "Tavily"
+        except Exception as exc:
+            logger.warning("Tavily failed: %s, falling back to SerpAPI/DuckDuckGo", exc)
+
     if SERPAPI_KEY:
         try:
             results = _serpapi(query, max_results)
