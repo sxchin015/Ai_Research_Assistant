@@ -62,7 +62,11 @@ def web_search(query, max_results=5):
             results = _tavily(query, max_results)
             return _format(results, "Tavily"), "Tavily"
         except Exception as exc:
-            logger.warning("Tavily failed: %s, falling back to next provider", exc)
+            logger.warning(
+                "Tavily failed: %s, falling back to next provider",
+                exc,
+                exc_info=True,
+            )
 
     if SERPAPI_KEY:
         try:
