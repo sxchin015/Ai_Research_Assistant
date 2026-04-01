@@ -18,3 +18,4 @@ pdfplumber>=0.11.0
 # ── Web Search (free DuckDuckGo by default) ───────────────────────────────────
 duckduckgo-search>=6.1.0
 requests>=2.31.0
+tavily-python>=0.3.0
