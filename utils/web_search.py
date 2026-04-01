@@ -1,6 +1,6 @@
 import logging
 import requests
-from config.config import SERPAPI_KEY
+from config.config import SERPAPI_KEY, TAVILY_API_KEY
 
 logger = logging.getLogger(__name__)
 
@@ -8,6 +8,13 @@ DDGS_AVAILABLE = False
 try:
     from duckduckgo_search import DDGS
     DDGS_AVAILABLE = True
+except ImportError:
+    pass
+
+TAVILY_AVAILABLE = False
+try:
+    from tavily import TavilyClient
+    TAVILY_AVAILABLE = True
 except ImportError:
     pass
 
@@ -29,19 +36,38 @@ def _serpapi(query, max_results=5):
     return resp.json().get("organic_results", [])[:max_results]
 
 
+def _tavily(query, max_results=5):
+    if not TAVILY_AVAILABLE:
+        raise RuntimeError("tavily-python not installed.")
+    client = TavilyClient(api_key=TAVILY_API_KEY)
+    response = client.search(query=query, max_results=max_results)
+    return response.get("results", [])[:max_results]
+
+
 def _format(results, source):
     if not results:
         return ""
     parts = [f"[Web results via {source}]\n"]
     for i, r in enumerate(results, 1):
         title = r.get("title", "")
-        url = r.get("href") or r.get("link", "")
-        snippet = r.get("body") or r.get("snippet", "")
+        url = r.get("href") or r.get("link") or r.get("url", "")
+        snippet = r.get("body") or r.get("snippet") or r.get("content", "")
         parts.append(f"{i}. {title}\n   {snippet}\n   {url}")
     return "\n\n".join(parts)
 
 
 def web_search(query, max_results=5):
+    if TAVILY_API_KEY:
+        try:
+            results = _tavily(query, max_results)
+            return _format(results, "Tavily"), "Tavily"
+        except Exception as exc:
+            logger.warning(
+                "Tavily failed: %s, falling back to next provider",
+                exc,
+                exc_info=True,
+            )
+
     if SERPAPI_KEY:
         try:
             results = _serpapi(query, max_results)
